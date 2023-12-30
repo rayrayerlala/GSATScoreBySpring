@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>學測成績列表</title>
+		<!-- 引入 PureCSS -->
+    	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+    	<!-- 引入 jQuery -->
+    	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    	<!-- 引入 DataTables CSS -->
+    	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    	<!-- 引入 DataTables -->
+    	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    	
+    	<!-- 引入 DataTables 其他功能 -->
+    	<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+        
+    	<script type="text/javascript">
+			// 當文件載入完成後
+			$(document).ready(function() {
+				$('.pure-table').DataTable({
+					// 功能鍵
+					//dom: 'Bfrtip',
+					//buttons: [
+			        //    'copy', 'csv', 'excel', 'pdf', 'print'
+			        //],
+			     	// 設定語言
+					"language": {
+						"url": "/js/chinese-taiwan.json"
+					}
+				});
+			});
+		</script>
+	</head>
+	<body style="padding: 15px">
+		<div class="pure-form">
+			<fieldset>
+				<legend>學測成績列表</legend>
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th>序號</th>
+							<th>姓名</th>
+							<th>國文分數</th>
+							<th>英文分數</th>
+							<th>數學分數</th>
+							<th>自然分數</th>
+							<th>社會分數</th>
+							<th>總分</th>
+							<th>平均</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="score, state : ${scores}">
+							<td th:text="${state.count}"></td>
+							<td th:text="${score.name}"></td>
+							<td th:text="${score.chineseScore}"></td>
+							<td th:text="${score.englishScore}"></td>
+							<td th:text="${score.mathematicsScore}"></td>
+							<td th:text="${score.naturalScienceScore}"></td>
+							<td th:text="${score.socialStudiesScore}"></td>
+							<td th:text="${score.totalScore}"></td>
+							<!-- (分數, 最小整數位, 小數位數) -->
+							<td th:text="${#numbers.formatDecimal(score.averageScore, 1, 1)}"></td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</fieldset>
+		</div>
+	</body>
+</html>
